@@ -31,6 +31,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          server-username: OSSRH_USERNAME
+          server-password: OSSRH_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
 
       - name: Wait for PostgreSQL
         run: |
