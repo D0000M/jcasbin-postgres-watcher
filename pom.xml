@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.D0000M</groupId>
-    <artifactId>jcasbin-psql-watcher</artifactId>
+    <groupId>org.casbin</groupId>
+    <artifactId>jcasbin-postgres-watcher</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -13,6 +13,35 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>D0000M</name>
+            <email>doom76upup@gmail.com</email>
+            <url>https://github.com/D0000M</url>
+        </developer>
+    </developers>
+
+    <!--scm>
+        <url>https://github.com/jcasbin/redis-watcher-ex</url>
+        <connection>scm:git@github.com:jcasbin/redis-watcher-ex.git</connection>
+        <developerConnection>scm:git:https://github.com/jcasbin/redis-watcher-ex.git</developerConnection>
+    </scm-->
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://central.sonatype.com</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <!-- jCasbin -->
@@ -47,5 +76,89 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Prevent gpg from using pinentry programs -->
+                    <gpgArguments>
+                        <arg>--pinentry-mode</arg>
+                        <arg>loopback</arg>
+                    </gpgArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- Include zipped source code in releases -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Allow attaching Javadoc during releases -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <source>11</source>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                    <!-- Turn off Java 8 strict Javadoc checking -->
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <tags>
+                        <tag>
+                            <name>notnull</name>
+                            <placement>a</placement>
+                            <head>Not null</head>
+                        </tag>
+                        <tag>
+                            <name>default</name>
+                            <placement>a</placement>
+                            <head>Default:</head>
+                        </tag>
+                    </tags>
+                </configuration>
+                <executions>
+                    <!-- Compress Javadoc into JAR and include that JAR when deploying. -->
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Automatically close and deploy from OSSRH -->
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>ossrh</publishingServerId>
+                    <!-- Release versions will be synced to Maven Central automatically. -->
+                    <autoPublish>true</autoPublish>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

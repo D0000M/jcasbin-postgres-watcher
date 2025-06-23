@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Arrays;
 
 public class JCasbinPostgresWatcherTest {
-    private static final String URL = "jdbc:postgresql://localhost:5432/casbin_test";
+    private static final String URL = "jdbc:postgresql://localhost:5432/testdb";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "wo4ton0DneAr2Fts7hpq";
+    private static final String PASSWORD = "postgres";
     private static final String CHANNEL = "test_channel";
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

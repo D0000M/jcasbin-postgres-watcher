@@ -5,9 +5,9 @@ import org.junit.jupiter.api.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MultiInstanceSyncTest {
-    private static final String URL = "jdbc:postgresql://localhost:5432/your_database";
+    private static final String URL = "jdbc:postgresql://localhost:5432/testdb";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "your_password";
+    private static final String PASSWORD = "postgres";
     private static final String CHANNEL = "test_channel";
 
     @Test
